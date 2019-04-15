@@ -45,6 +45,27 @@ $f3->route('GET /lunch/brunch/buffet', function () {
     echo $view->render('views/buffet.html');
 });
 
+//Define a route with a parameter
+$f3->route('GET /@item', function($f3, $params) {
+
+    $item = $params['item'];
+   switch($item) {
+       case 'spaghetti':
+           echo"<h3>I like $item with meatballs.</h3>";
+           break;
+       case 'pizza':
+           echo "<h3>Pepperoni or veggie?</h3>";
+           break;
+       case 'tacos':
+           echo "<h3>We don't have $item</h3>";
+           break;
+       case 'bagel':
+           $f3->reroute("/lunch/brunch/buffet");
+       default:
+           $f3->error(404);
+   }
+});
+
 
 //Run Fat-Free
 $f3->run();
